@@ -34,7 +34,7 @@ echo(inner_diameter_bottom_is= (2 * sideDistance-rimThickness) * bottomScale);
 for (j=[0:sides-1]) {
   rotate([0,0,2 * angle * j + angle])
   translate([sideDistance, -sideLength/ 2,0]){
-      for (i=[0:studLength-1]) {
+      for (i=[0:studLength-2]) {
         translate([0, studSpacing * i, studHeight / 2])cylinder(d=studDiameter, h=studHeight, center=true, $fn = 24);
       }
   }
