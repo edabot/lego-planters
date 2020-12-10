@@ -1,23 +1,34 @@
+// Planter parameters. Play with these.
 studLength = 7;
 studWidth = 7;
-studSpacing = 8;
-
 height = 30;
 bottomThickness = 0.4;
 rimThickness = 6;
-studDiameter = 5;
-studHeight = 1.7;
 bottomScale = .6;
+twistAngle = 15;
+drainHoles = 1; // not currently implemented
+drainDiameter = 5;
 minWallThickness = .8;
 
+// IMPORTANT: this may need to be changed. LEGO is finicky for fit so use the legotest.stl file to
+// determine the best diameter for your setup
+studDiameter = 5;
+
+//LEGO standard
+studSpacing = 8;
+studHeight = 1.7;
+
+// calculated values
 topWidth = (studWidth - 1) * studSpacing;
 topLength = (studLength - 1) * studSpacing;
-
-twistAngle = 90;
-
-drainHoles = 0;
-drainDiameter = 5;
 drainAngle = 360 / drainHoles;
+
+// suggested filename to include parameters
+echo(filename=str("legoplanter_rect_", studLength, "x", studWidth, "s_", bottomScale * 100, "s_", twistAngle, "a_", drainHoles, "x", drainDiameter, "d"  ));
+
+//----------
+
+//make studs
 translate([-topLength / 2, -topWidth / 2]){
   union() {
     for (i=[0:studLength-1]) {
@@ -38,6 +49,7 @@ translate([-topLength / 2, -topWidth / 2]){
 $fn = 48;
 
 rotate([180,0,0]){
+  // make body
   linear_extrude(height = height, center = false, convexity = 10, twist = twistAngle, slices = height / .2, scale = bottomScale)
   {
     difference(){
@@ -59,7 +71,7 @@ rotate([180,0,0]){
     }
     }
   }
-
+  // make bottom
   translate([0,0,height])
   rotate([0,0,-twistAngle])
   scale(bottomScale)
